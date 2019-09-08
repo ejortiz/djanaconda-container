@@ -20,7 +20,22 @@ RUN yes | pip install django django-analytical django-sendfile django-allauth mo
   flake8 nose mock coverage pygments lxml cssselect docutils \
   hovercraft rst2pdf pillow
 
-# RUN mod_wsgi-express install-module
+RUN mod_wsgi-express install-module
+
+
+# Move the `mod_wsgi` library to the apache modules folder:
+RUN mod_wsgi-express install-module
+
+# SKIPPING THIS STEP FOR NOW
+# # ...which should give the following output:
+# RUN LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi-py34.cpython-34m.so
+# RUN WSGIPythonHome /home/username/anaconda3
+
+# copy over wsgi config and enable wsgi
+COPY wsgi.conf /etc/apache2/mods-available/
+COPY wsgi.load /etc/apache2/mods-available
+RUN a2enmod wsgi
+RUN service apache2 restart
 
 CMD [ "/bin/bash" ]
 
