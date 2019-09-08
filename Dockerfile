@@ -47,7 +47,6 @@ COPY wsgi.load /etc/apache2/mods-available/
 COPY django-site.conf /etc/apache2/sites-available
 RUN a2enmod wsgi
 RUN a2ensite django-site
-RUN service apache2 restart
 
 # create django project
 WORKDIR /var/www/
@@ -63,13 +62,13 @@ COPY settings.py /var/www/${django_app_dir}/${project_name}/${project_name}/sett
 WORKDIR ${project_name}
 RUN mkdir static
 RUN python ./manage.py collectstatic --noinput
+WORKDIR /var/www/${django_app_dir}
+RUN chown -R :www-data ./
 
 # RUN sed -i "127.0.0.1       localhost        mysite.org        www.mysite.org" /etc/hosts
-RUN service apache2 start
-RUN service apache2 restart
+# Run apache in the foreground, else apache2 will be detached from the shell
+CMD apachectl -D FOREGROUND
 
-
-CMD [ "/bin/bash" ]
 
 
 
