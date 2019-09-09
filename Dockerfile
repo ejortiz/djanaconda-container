@@ -29,11 +29,6 @@ RUN mod_wsgi-express install-module
 # Move the `mod_wsgi` library to the apache modules folder:
 RUN mod_wsgi-express install-module
 
-# SKIPPING THIS STEP FOR NOW
-# # ...which should give the following output:
-# RUN LoadModule wsgi_module /usr/lib/apache2/modules/mod_wsgi-py34.cpython-34m.so
-# RUN WSGIPythonHome /home/username/anaconda3
-
 # NOTE: SAMPLE FOR ENVIRONMENT CREATION
 # RUN conda create --name ${environment_name} python=3
 # RUN echo ${environment_name}
@@ -41,7 +36,6 @@ RUN mod_wsgi-express install-module
 
 # copy over wsgi config and enable wsgi
 # NOTE: edit the wsgi.conf and wsgi.load if anaconda python versions are upgraded or renamed
-
 COPY wsgi.conf /etc/apache2/mods-available/
 COPY wsgi.load /etc/apache2/mods-available/
 COPY django-site.conf /etc/apache2/sites-available
@@ -65,7 +59,9 @@ RUN python ./manage.py collectstatic --noinput
 WORKDIR /var/www/${django_app_dir}
 RUN chown -R :www-data ./
 
-# RUN sed -i "127.0.0.1       localhost        mysite.org        www.mysite.org" /etc/hosts
+# disable default site
+RUN a2dissite 000-default.conf
+
 # Run apache in the foreground, else apache2 will be detached from the shell
 CMD apachectl -D FOREGROUND
 
