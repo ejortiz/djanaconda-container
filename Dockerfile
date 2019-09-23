@@ -21,7 +21,7 @@ RUN yes| conda install -c anaconda pip
 # install django and other packages
 RUN yes | pip install django django-analytical django-sendfile django-allauth mod_wsgi \
   flake8 nose mock coverage pygments lxml cssselect docutils \
-  hovercraft rst2pdf pillow
+  hovercraft rst2pdf pillow pyscopg2
 
 RUN mod_wsgi-express install-module
 
