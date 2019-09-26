@@ -1,7 +1,7 @@
 import os
 import sys
 
-path = '/var/www/django-apps/mainsite'
+path = '/var/www/django-apps/mainsite/mainsite'
 if path not in sys.path:
     sys.path.append(path)
 

@@ -16,12 +16,16 @@ RUN apt-get update
 # install apache webserver
 RUN yes | apt-get install apache2 apache2-bin apache2-dev
 
-RUN yes| conda install -c anaconda pip 
+RUN yes| conda install -c anaconda pip
 
 # install django and other packages
 RUN yes | pip install django django-analytical django-sendfile django-allauth mod_wsgi \
   flake8 nose mock coverage pygments lxml cssselect docutils \
-  hovercraft rst2pdf pillow pyscopg2
+  hovercraft rst2pdf
+
+RUN yes | apt-get install python-psycopg2
+
+RUN yes | pip install postgres
 
 RUN mod_wsgi-express install-module
 
@@ -49,8 +53,8 @@ WORKDIR ${django_app_dir}
 
 RUN django-admin startproject ${project_name}
 
-RUN cp /var/www/${django_app_dir}/${project_name}/${project_name}/wsgi.py /var/www/${django_app_dir}/${project_name}/wsgi.py
-COPY wsgi.py /var/www/${django_app_dir}/${project_name}/wsgi.py
+# RUN cp /var/www/${django_app_dir}/${project_name}/${project_name}/wsgi.py /var/www/${django_app_dir}/${project_name}/wsgi.py
+COPY wsgi.py /var/www/${django_app_dir}/${project_name}/${project_name}/wsgi.py
 COPY settings.py /var/www/${django_app_dir}/${project_name}/${project_name}/settings.py
 
 WORKDIR ${project_name}
