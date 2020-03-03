@@ -7,11 +7,13 @@ services:
       - database.env # configure postgres
     volumes:
       - database-data:/var/lib/postgresql/data/ # persist data even
+    container_name: "postgres-db"
 
   webapp:
     build:
       context: ./
       dockerfile: Dockerfile
+    container_name: "webapp"
 
 volumes:
   database-data: # named volumes can be managed easier using docker-compose
