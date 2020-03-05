@@ -6,7 +6,7 @@ services:
     env_file:
       - database.env # configure postgres
     volumes:
-      - database-data:/var/lib/postgresql/data/ # persist data even
+      - db-data:/var/lib/postgresql/data/ # persist data even
     container_name: "postgres-db"
 
   webapp:
@@ -14,6 +14,9 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: "webapp"
+    volumes:
+      - mainsite:/opt/www/django-apps/mainsite # persist data
 
 volumes:
-  database-data: # named volumes can be managed easier using docker-compose
+  db-data: # named volumes can be managed easier using docker-compose
+  mainsite:
