@@ -54,8 +54,8 @@ WORKDIR ${django_app_dir}
 
 RUN django-admin startproject ${project_name}
 
-RUN cp /opt/www/${django_app_dir}/${project_name}/${project_name}/wsgi.py /opt/www/${django_app_dir}/${project_name}/wsgi.py
-COPY wsgi.py /opt/www/${django_app_dir}/${project_name}/wsgi.py
+# RUN cp /opt/www/${django_app_dir}/${project_name}/${project_name}/wsgi.py /opt/www/${django_app_dir}/${project_name}/wsgi.py
+COPY wsgi.py /opt/www/${django_app_dir}/${project_name}/${project_name}/wsgi.py
 COPY settings.py /opt/www/${django_app_dir}/${project_name}/${project_name}/settings.py
 
 WORKDIR ${project_name}
