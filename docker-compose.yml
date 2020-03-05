@@ -1,0 +1,24 @@
+---
+version: '3'
+services:
+  database:
+    image: "postgres" # use latest official postgres version
+    env_file:
+      - database.env # configure postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data/ # persist data even
+    container_name: "postgres-db"
+
+  webapp:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: "webapp"
+    ports:
+    - "80:80"
+    volumes:
+      - mainsite:/opt/www/django-apps/mainsite # persist data
+
+volumes:
+  db-data: # named volumes can be managed easier using docker-compose
+  mainsite:
