@@ -1,0 +1,26 @@
+---
+services:
+  postgres-db:
+    container_name: postgres-db
+    env_file:
+      - database.env
+    image: postgres
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+  webapp:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: webapp
+    ports:
+      - "8000:8000"
+    volumes:
+      - "mainsite:/opt/www/django-apps/mainsite"
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - postgres-db
+version: "3"
+volumes:
+  db-data: ~
+  mainsite: ~
