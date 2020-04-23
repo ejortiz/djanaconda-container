@@ -14,7 +14,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: webapp
-    command: python manage.py runserver 0.0.0.0:8000
+    command:  bash -c 'while !</dev/tcp/postgres-db/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8000'
     ports:
       - "8888:8000"
     volumes:

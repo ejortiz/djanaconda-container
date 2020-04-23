@@ -41,9 +41,8 @@ COPY wsgi.py /opt/www/${django_app_dir}/${project_name}/wsgi.py
 RUN python ./manage.py collectstatic --noinput
 WORKDIR /opt/www/${django_app_dir}
 RUN chown -R :www-data ./
-#COPY mainsite/entrypoint.sh /opt/www/${django_app_dir}/entrypoint.sh
-RUN chmod +x /opt/www/${django_app_dir}/entrypoint.sh
+#RUN chmod +x /opt/www/${django_app_dir}/entrypoint.sh
 #ENTRYPOINT ["/opt/www/mainsite/entrypoint.sh"]
 #EXPOSE 8000
-CMD ["/bin/bash", "entrypoint.sh"]
+#CMD ["/bin/bash", "entrypoint.sh"]
 
