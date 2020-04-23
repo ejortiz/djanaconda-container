@@ -21,12 +21,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", 'testkey089090')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+if os.environ.get("DJANGO_ALLOWED_HOSTS") is not None:
+    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+else:
+    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default=[])
 
 # Application definition
 INSTALLED_APPS = [
@@ -77,7 +80,7 @@ DATABASES = {
         'ENGINE': os.environ.get('DB_ENGINE', default='django.db.backends.sqlite3'),
         'NAME': os.environ.get('DB_DATABASE_NAME', default=os.path.join(BASE_DIR, 'db.sqlite3')),
         'USER': os.environ.get('DB_USER', default='user'),
-        'HOST': os.environ.get('DB_HOST', default='postgres-db'),
+        'HOST': os.environ.get('DB_HOST', default='localhost'),
         'PORT': os.environ.get('SQL_PORT', default='5432')
     }
 }

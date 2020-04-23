@@ -3,8 +3,10 @@ services:
   postgres-db:
     container_name: postgres-db
     env_file:
-      - database.env
+      - database.env.dev
     image: postgres
+    ports:
+    - "5432:5432"
     volumes:
       - "db-data:/var/lib/postgresql/data"
   webapp:
@@ -12,12 +14,13 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: webapp
+    command: python manage.py runserver 0.0.0.0:8000
     ports:
-      - "8000:8000"
+      - "8888:8000"
     volumes:
       - "mainsite:/opt/www/django-apps/mainsite"
     env_file:
-      - ./.env.dev
+      - .env.dev
     depends_on:
       - postgres-db
 version: "3"
