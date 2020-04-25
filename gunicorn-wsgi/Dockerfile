@@ -15,12 +15,17 @@ ENV PYTHONUNBUFFERED 1
 # update debian from anaconda image
 RUN apt-get update
 
+# install gunicorn wsgi server
+#RUN yes | apt-get install gunicorn
+
 RUN yes| conda install -c anaconda pip 
 
 # install django and other packages
 RUN yes | pip install django django-analytical django-sendfile django-allauth \
   flake8 nose mock coverage pygments lxml cssselect docutils \
   hovercraft rst2pdf pillow djangorestframework psycopg2-binary
+
+RUN yes | pip install gunicorn
 
 ## create django project path
 RUN mkdir ${project_path}
