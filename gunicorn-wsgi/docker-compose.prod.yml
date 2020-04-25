@@ -23,9 +23,10 @@ services:
       - .env.prod
     depends_on:
       - postgres-db
-  nginx:
+  proxy:
     build:
       ./nginx
+    container_name: proxy
     ports:
     - "8889:80"
     depends_on:
