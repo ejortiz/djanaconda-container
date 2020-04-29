@@ -19,6 +19,8 @@ services:
       - 8000  # only allow 8000 to other docker services
     volumes:
       - "mainsite:/opt/www/django-apps/mainsite"
+      - "static_volume:/opt/www/django-apps/mainsite/static"
+
     env_file:
       - .env.prod
     depends_on:
@@ -27,6 +29,9 @@ services:
     build:
       ./nginx
     container_name: proxy
+    volumes:
+      - "mainsite:/opt/www/django-apps/mainsite"
+      - "static_volume:/opt/www/django-apps/mainsite/static"
     ports:
     - "8889:80"
     depends_on:
@@ -36,3 +41,4 @@ version: "3"
 volumes:
   db-data: ~
   mainsite: ~
+  static_volume: ~
