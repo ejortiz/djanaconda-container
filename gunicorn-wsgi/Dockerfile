@@ -40,5 +40,6 @@ COPY wsgi.py /opt/www/${django_app_dir}/${project_name}/wsgi.py
 RUN python ./manage.py collectstatic --noinput
 WORKDIR /opt/www/${django_app_dir}
 RUN chown -R :www-data ./
+RUN chmod -R 777 ./
 
 
