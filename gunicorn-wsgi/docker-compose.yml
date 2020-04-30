@@ -16,7 +16,7 @@ services:
     container_name: webapp
     command:  bash -c 'while !</dev/tcp/postgres-db/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8000'
     ports:
-      - "8888:8000"
+      - "8000:8000"
     volumes:
       - "mainsite:/opt/www/django-apps/mainsite"
     env_file:
