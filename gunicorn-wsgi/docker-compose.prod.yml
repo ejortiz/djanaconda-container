@@ -32,8 +32,10 @@ services:
     volumes:
       - "mainsite:/opt/www/django-apps/mainsite"
       - "static_volume:/opt/www/django-apps/static/"
+      - "nginx_certs:/etc/nginx/certs"
     ports:
     - "8080:80"
+    - "8888:443"
     depends_on:
       - webapp
 
@@ -42,3 +44,4 @@ volumes:
   db-data: ~
   mainsite: ~
   static_volume: ~
+  nginx_certs: ~
