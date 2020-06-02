@@ -3,7 +3,7 @@ services:
   postgres-db:
     container_name: postgres-db
     env_file:
-      - database.env.prod
+      - database.env.prod_local
     image: postgres
     ports:
     - "5432:5432"
@@ -22,20 +22,20 @@ services:
       - "static_volume:/opt/www/django-apps/static/"
 
     env_file:
-      - .env.prod
+      - .env.prod_local
     depends_on:
       - postgres-db
   proxy:
     build:
-      ./nginx/prod
+      ./nginx/prod-local
     container_name: proxy
     volumes:
       - "mainsite:/opt/www/django-apps/mainsite"
       - "static_volume:/opt/www/django-apps/static/"
       - "nginx_certs:/etc/nginx/certs"
     ports:
-    - "80:80"
-    - "443:443"
+    - "8080:80"
+    - "8888:443"
     depends_on:
       - webapp
 
